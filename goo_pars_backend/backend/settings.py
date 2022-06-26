@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'for_django_test',
-        'USER': 'django_user',
-        'PASSWORD': 'qwerty12345',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': 'name',
+        'USER': 'user',
+        'PASSWORD': 'password',
+        'HOST': 'host',
+        'PORT': 'port',
         #'OPTIONS': {
         #    'isolation_level': psycopg2.extensions.ISOLATION_LEVEL_SERIALIZABLE,
         #},
