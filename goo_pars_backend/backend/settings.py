@@ -143,11 +143,7 @@ CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
 #CELERY_RESULT_SERIALIZER = 'json'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION':(
+    'DEFAULT_AUTHENTICATION_CLASSES':(
         'rest_framework.authentication.TokenAuthentication',
-        'api.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication'
     )
 }
