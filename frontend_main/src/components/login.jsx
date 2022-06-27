@@ -18,7 +18,7 @@ const Login = props => {
     }
 
     const login = () => {
-        props.login({username: username, password: password}); 
+        props.login({username: username, password: password});
     }
 
     return (

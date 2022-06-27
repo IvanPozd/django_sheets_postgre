@@ -1,11 +1,54 @@
-import React from 'react';
 
-const Singup = () => {
+import React, {useState} from 'react';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+
+const Singup = props => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    
+    const onChangeUsername = e => {
+        const username = e.target.value;
+        setUsername(username);
+    }
+
+    const onChangePassword = e => {
+        const password = e.target.value;
+        setPassword(password);
+    }
+
+    const singup = () => {
+        props.singup({username: username, password: password});
+        props.history.push('/');
+    }
+
     return (
-        <div className="App">
-            Sing Up
-        </div>
+        <Container>
+            <Form>
+                <Form.Group className="mb-3">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Введите Username"
+                        value={username}
+                        onChange={onChangeUsername}
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type="password"
+                        placeholder="Введите Password"
+                        value={password}
+                        onChange={onChangePassword}
+                    />
+                </Form.Group>
+                <Button variant='dark' onClick={singup}>Регистрация</Button>
+            </Form>
+        </Container>
     );
 };
+
 
 export default Singup;

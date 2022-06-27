@@ -14,9 +14,17 @@ import DataService from './services/datas';
 
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const [token, setToken] = useState(null);
   const [error, setError] = useState('');
+  // console.log(`from App ${user}`) //
+  // console.log(localStorage.getItem('user'))
+  // console.log(localStorage.getItem('token'))
+  // console.log(user)
+  useEffect(() => {
+      setToken(localStorage.getItem('token'));
+      setUser(localStorage.getItem('user'));
+    });
 
   async function login(user = null) {
     DataService.login(user).then(response => {
@@ -33,21 +41,34 @@ function App() {
   }
 
   async function logout() {
-    setUser(null);
+    setToken('');
+    setUser('');
+    localStorage.setItem('token', '');
+    localStorage.setItem('user', '');
   }
 
   async function singup(user = null) {
-    setUser(null);
+    DataService.singup(user).then(response => {
+      setToken(response.data.token);
+      setUser(user.username);
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', user.username);
+      setError("");
+    })
+    .catch(e => {
+      console.log('login', e);
+      setError(e.toString());
+    });
   }
     
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="/datas"  align="center">Таблица</Navbar.Brand>
+          <Navbar.Brand href="/datas/"  align="center">Таблица</Navbar.Brand>
           <Nav className="me-auto">
           { user ? 
-            (<Nav.Link>Logout({user})</Nav.Link>)
+            (<Nav.Link onClick={logout}>Logout({user})</Nav.Link>)
                 :(<>
                   <Nav.Link href="/login">Login</Nav.Link>
                   <Nav.Link href="/singup">Sing Up</Nav.Link>

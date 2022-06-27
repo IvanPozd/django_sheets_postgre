@@ -10,7 +10,6 @@ from rest_framework.authtoken.models import Token
 from .serializers import DataSerializer
 
 
-
 class DataListCreate(generics.ListCreateAPIView):
     serializer_class = DataSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -19,7 +18,8 @@ class DataListCreate(generics.ListCreateAPIView):
         return Data.objects.all()
     
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(user=self.request.user)
+
 
 class DataListRetriveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DataSerializer
@@ -27,7 +27,6 @@ class DataListRetriveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         user = self.request.user
         return Data.objects.all()
-
 
 
 @csrf_exempt
