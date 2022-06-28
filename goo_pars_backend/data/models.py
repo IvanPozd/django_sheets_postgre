@@ -5,7 +5,7 @@ from django.db import models
 class Data(models.Model):
     
     id = models.IntegerField(primary_key=True)
-    order_number = models.IntegerField(max_length=7, unique=True)
+    order_number = models.IntegerField(unique=True)
     price_usd = models.IntegerField()
     date_ship = models.DateField()
     price_rub = models.IntegerField()

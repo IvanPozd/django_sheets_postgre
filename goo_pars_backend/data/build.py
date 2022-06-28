@@ -7,22 +7,22 @@ from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import date
 from bs4 import BeautifulSoup
-#from data.models import Data
 
 
+# Функция возвращает значение кура доллара к рублю
 def current_usd_rub():
     today = date.today().strftime("%d/%m/%Y")
     url = f"https://www.cbr.ru/scripts/XML_daily.asp?date_req={today}"
     r = requests.get(url)
-    soup = BeautifulSoup(r.text, "lxml")
-    all_valuete = soup.find_all("valute")
+    soup = BeautifulSoup(r.text, "xml",)
+    all_valuete = soup.find_all("Valute")
     for val in all_valuete:
-        if val["id"] == "R01235":
-            d = val.find("value").text.split(",")
+        if val["ID"] == "R01235":
+            d = val.find("Value").text.split(",")
             dollar = ".".join(d)
 
             return float(dollar)
-
+        
 
 def get_service_sacc():
     # spread_sheet_id = "1jcdmb5ytzUvG5-UBy-YcHtHuHGSIsS7s0Gw5_K5AUe0"
@@ -72,7 +72,7 @@ def master():
 
     data = resp["valueRanges"][0]["values"]
 
-    rub = current_usd_rub()
+    rub = current_usd_rub() 
     count = 0
     for i in data:
         if count == 0:
@@ -82,9 +82,12 @@ def master():
             rub_cost = dollar_cost * rub
             rub_format = f"{rub_cost:.2f}"
             i.append(rub_format)
+        print(i)
         all_data.append(i)
-        #post_data = Data.objects.create(i)
-        #post_data.save()
         count += 1
 
     return all_data
+
+
+if __name__ == "__main__":
+    master()

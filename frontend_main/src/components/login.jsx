@@ -19,6 +19,7 @@ const Login = props => {
 
     const login = () => {
         props.login({username: username, password: password});
+        props.history.push("/datas/")
     }
 
     return (

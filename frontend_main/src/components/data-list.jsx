@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card'
 
+
 const DataList = props => {
     const [someData, setSomeDate ] = useState([])
 
@@ -28,10 +29,10 @@ const DataList = props => {
                     <Card key={oneData.id} className="mb-3">
                         <Card.Body>
                             <div>
-                                <Card.Title><b>Номер заказа:</b>{oneData.order_number}</Card.Title>
-                                <Card.Text><b>Цена в долларах:</b>{oneData.price_usd}</Card.Text>
-                                <Card.Text><b>Дата доставки:</b>{oneData.date_ship}</Card.Text>
-                                <Card.Text><b>Цена в рублях:</b>{oneData.price_rub}</Card.Text>
+                                <Card.Title><b>Номер заказа: </b>{oneData.order_number}</Card.Title>
+                                <Card.Text><b>Цена в долларах: </b>{oneData.price_usd}</Card.Text>
+                                <Card.Text><b>Дата доставки: </b>{oneData.date_ship}</Card.Text>
+                                <Card.Text><b>Цена в рублях: </b>{oneData.price_rub}</Card.Text>
                             </div>
                             <Link to={{
                                 pathname: "/datas/" + oneData.id,

@@ -7,6 +7,7 @@ import Login from './components/login';
 import Singup from './components/singup';
 import DataList from './components/data-list';
 import DataSolo from './components/data-solo';
+import bigTable from './components/big-table';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Navbar';
@@ -21,6 +22,7 @@ function App() {
   // console.log(localStorage.getItem('user'))
   // console.log(localStorage.getItem('token'))
   // console.log(user)
+  
   useEffect(() => {
       setToken(localStorage.getItem('token'));
       setUser(localStorage.getItem('user'));

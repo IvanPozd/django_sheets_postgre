@@ -20,7 +20,7 @@ const Singup = props => {
 
     const singup = () => {
         props.singup({username: username, password: password});
-        props.history.push('/');
+        props.history.push("/datas/");
     }
 
     return (
