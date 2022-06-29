@@ -4,10 +4,12 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
+from django.db.utils import IntegrityError as Integr
 from rest_framework import generics, permissions
 from rest_framework.parsers import JSONParser
 from rest_framework.authtoken.models import Token
 from .serializers import DataSerializer
+from data.build import master
 
 
 class DataListCreate(generics.ListCreateAPIView):
@@ -15,7 +17,27 @@ class DataListCreate(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     def get_queryset(self):
         user = self.request.user
-        return Data.objects.all()
+        try:
+            list_of_rows = master()
+            count = 0
+            for block in list_of_rows:
+                count += 1
+                if count > 1:
+                    wr_date = block[3].split('.')
+                    good_date = [wr_date[2], wr_date[1], wr_date[0]]
+                    date = '-'.join(good_date)
+                    d = Data.objects.get(id=int(block[0]))
+                    d.order_number = int(block[1])
+                    d.price_usd = int(block[2])
+                    d.date = date
+                    d.price_rub = float(block[4])
+                    d.save()
+
+        except Integr as e:
+            print(f"Error: {e}")
+            return Data.objects.all().order_by("id")
+                
+        return Data.objects.all().order_by("id")
     
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

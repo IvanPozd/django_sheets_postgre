@@ -81,8 +81,7 @@ def master():
             dollar_cost = float(i[2])
             rub_cost = dollar_cost * rub
             rub_format = f"{rub_cost:.2f}"
-            i.append(rub_format)
-        print(i)
+            i.append(rub_format) 
         all_data.append(i)
         count += 1
 
