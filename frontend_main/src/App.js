@@ -1,17 +1,17 @@
-import React, {useState, useDispatch, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Table from 'rc-table';
+// import Table from 'rc-table';
 import Login from './components/login';
 import Singup from './components/singup';
-import DataList from './components/data-list';
+// import DataList from './components/data-list';
 import DataSolo from './components/data-solo';
-import bigTable from './components/big-table';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Navbar';
 import DataService from './services/datas';
+import Table from './components/Table';
 
 
 function App() {
@@ -83,7 +83,7 @@ function App() {
       <div className="container mt-4">
         <Switch>
           <Route exact path={["/", "/datas"]} render={(props) => 
-            <DataList {...props} token={token} />
+            <Table {...props} token={token} />
             }>
           </Route>
 

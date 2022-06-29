@@ -16,6 +16,7 @@ const DataList = props => {
     const retrieveData = () => {
         DataService.getAll(props.token).then(response => {
             setSomeDate(response.data);
+            localStorage.setItem('data', response.data);
         })
         .catch(e => {
             console.log(e)
