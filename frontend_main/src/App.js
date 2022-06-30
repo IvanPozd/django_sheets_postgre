@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-// import Table from 'rc-table';
 import Login from './components/login';
 import Singup from './components/singup';
 // import DataList from './components/data-list';
@@ -18,6 +17,7 @@ function App() {
   const [user, setUser] = useState();
   const [token, setToken] = useState(null);
   const [error, setError] = useState('');
+    
   // console.log(`from App ${user}`) //
   // console.log(localStorage.getItem('user'))
   // console.log(localStorage.getItem('token'))
@@ -83,7 +83,7 @@ function App() {
       <div className="container mt-4">
         <Switch>
           <Route exact path={["/", "/datas"]} render={(props) => 
-            <Table {...props} token={token} />
+            <Table {...props} token={token}/>
             }>
           </Route>
 
