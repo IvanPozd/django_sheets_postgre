@@ -5,12 +5,11 @@ import './App.css';
 import Login from './components/login';
 import Singup from './components/singup';
 // import DataList from './components/data-list';
-import DataSolo from './components/data-solo';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Navbar';
 import DataService from './services/datas';
-import Table from './components/Table';
+import MyTable from './components/Table';
 
 
 function App() {
@@ -67,7 +66,7 @@ function App() {
     <div className="App">
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="/datas/"  align="center">Таблица</Navbar.Brand>
+          <Navbar.Brand href="/api/datas/"  align="center">Таблица</Navbar.Brand>
           <Nav className="me-auto">
           { user ? 
             (<Nav.Link onClick={logout}>Logout({user})</Nav.Link>)
@@ -82,13 +81,8 @@ function App() {
 
       <div className="container mt-4">
         <Switch>
-          <Route exact path={["/", "/datas"]} render={(props) => 
-            <Table {...props} token={token}/>
-            }>
-          </Route>
-
-          <Route path="/datas/:id" render={(props) => 
-            <DataSolo {...props} token={token} />
+          <Route exact path={["/", "/api/datas"]} render={(props) => 
+            <MyTable {...props} token={token}/>
             }>
           </Route>
 

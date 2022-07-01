@@ -1,39 +1,51 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import DataService from '../services/datas';
+import Table from 'react-bootstrap/Table';
 
 
-class Table extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {data: []};
-  }
+const MyTable = props => {
+    const [someData, setSomeDate ] = useState([])
 
-  componentDidUpdate(prevProps, prevState) {
-    DataService.getAll(this.props.token).then(response => {
-      if (true) {
-        //console.log(prevProps)
-        console.log(prevState.data)
-        //console.log(this.state.data)
-        this.setState(
-        {data : response.data}
-        );
+    useEffect(() => {
+        retrieveData();
+    }, [props.token]);
 
-      } else {console.log(this.state.data)}
-    })
-    .catch(e => {
-        console.log(e)
-    });
+    const retrieveData = () => {
+        DataService.getAll(props.token).then(response => {
+            setSomeDate(response.data);
+            localStorage.setItem('data', response.data);
+            console.log(props.token);
+        })
+        .catch(e => {
+            console.log(e)
+        });
     }
 
-  render() {
-    const data = this.state.data
-    // console.log(data)
     return (
-      <div>
-        Здесь будет таблица
-      </div>
+      <Table>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>order number</th>
+            <th>price usd</th>
+            <th>date ship</th>
+            <th>price rub</th>
+          </tr>
+        </thead>
+        {someData.map((oneData) => {
+            return (
+                <tbody>
+                  <td>{oneData.id}</td>
+                  <td>{oneData.order_number}</td>
+                  <td>{oneData.price_usd}</td>
+                  <td>{oneData.date_ship}</td>
+                  <td>{oneData.price_rub}</td>
+                </tbody>
+            )
+        })}
+        
+      </Table>
     );
-  }
 }
- 
-export default Table;
+
+export default MyTable;
