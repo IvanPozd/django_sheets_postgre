@@ -1,13 +1,13 @@
 version: '3.8'
 
-services:
+services: 
   goo_pars_backend:
     build: ./goo_pars_backend
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./goo_pars_backend/:/usr/src/goo_pars_backend/
     ports:
-      - 8000:8000
+      - '8000:8000'
     env_file:
       - ./.env.dev
     
@@ -22,6 +22,14 @@ services:
         - POSTGRES_USER=django_user
         - POSTGRES_PASSWORD=qwerty12345
         - POSTGRES_DB=for_django_test
+
+  frontend_main:
+    build: ./frontend_main
+    container_name: frontend_main_c
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
 
 volumes:
   postgres_data:

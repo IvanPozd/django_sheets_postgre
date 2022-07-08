@@ -25,7 +25,7 @@ function App() {
   useEffect(() => {
       setToken(localStorage.getItem('token'));
       setUser(localStorage.getItem('user'));
-    });
+    }, []);
 
   async function login(user = null) {
     DataService.login(user).then(response => {

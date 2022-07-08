@@ -10,6 +10,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.authtoken.models import Token
 from .serializers import DataSerializer
 from data.build import master
+import data
 
 
 class DataListCreate(generics.ListCreateAPIView):
@@ -22,7 +23,7 @@ class DataListCreate(generics.ListCreateAPIView):
             count = 0
             for block in list_of_rows:
                 count += 1
-                if count > 1:
+                if count > 0:
                     wr_date = block[3].split('.')
                     good_date = [wr_date[2], wr_date[1], wr_date[0]]
                     date = '-'.join(good_date)
@@ -36,6 +37,22 @@ class DataListCreate(generics.ListCreateAPIView):
         except Integr as e:
             print(f"Error: {e}")
             return Data.objects.all().order_by("id")
+        
+        except data.models.Data.DoesNotExist:
+            list_of_rows = master()
+            for index, block in enumerate(list_of_rows):
+                if index >= 1:
+                    wr_date = block[3].split('.')
+                    good_date = [wr_date[2], wr_date[1], wr_date[0]]
+                    date = '-'.join(good_date)
+                    d = Data.objects.create(
+                        id=int(block[0]), 
+                        order_number=int(block[1]),
+                        price_usd=int(block[2]),
+                        date_ship=date,
+                        price_rub=float(block[4])
+                        )
+                    d.save()
                 
         return Data.objects.all().order_by("id")
     
