@@ -39,6 +39,7 @@ git clone https://github.com/IvanPozd/django_sheets_postgre.git
 ```
 
 2.5 Скопируйте ID Вашей таблицы в Google Sheets.
+
 ```https://docs.google.com/spreadsheets/d/ID-БУДЕТ-НАХОДИТЬСЯ-ЗДЕСЬ/edit#gid=0```
 
 2.6 В директории ```/data``` в файле ```build.py```
