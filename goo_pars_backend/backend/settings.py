@@ -30,6 +30,7 @@ SECRET_KEY = 'django-insecure-3802pj3#5k=2f3xv%behpd^=jcloige8q!$$u573r@a_0ld4u-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get('DEBUG', default=1))
 
+#ALLOWED_HOSTS = []
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 
@@ -158,6 +159,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',

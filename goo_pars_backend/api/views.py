@@ -20,40 +20,40 @@ class DataListCreate(generics.ListCreateAPIView):
         user = self.request.user
         try:
             list_of_rows = master()
-            count = 0
             for block in list_of_rows:
-                count += 1
-                if count > 0:
-                    wr_date = block[3].split('.')
-                    good_date = [wr_date[2], wr_date[1], wr_date[0]]
-                    date = '-'.join(good_date)
-                    d = Data.objects.get(id=int(block[0]))
-                    d.order_number = int(block[1])
-                    d.price_usd = int(block[2])
-                    d.date = date
-                    d.price_rub = float(block[4])
-                    d.save()
+                wr_date = block['Срок поставки'].split('.')
+                good_date = [wr_date[2], wr_date[1], wr_date[0]]
+                date = '-'.join(good_date)
+                d = Data.objects.get(id=int(block['№']))
+                d.order_number = int(block['Заказ №'])
+                d.price_usd = int(block['Цена, USD'])
+                d.date = date
+                d.price_rub = float(block['Цена, RUB'])
+                d.save()
 
         except Integr as e:
             print(f"Error: {e}")
             return Data.objects.all().order_by("id")
         
         except data.models.Data.DoesNotExist:
-            list_of_rows = master()
-            for index, block in enumerate(list_of_rows):
-                if index >= 1:
-                    wr_date = block[3].split('.')
+            try:
+                list_of_rows = master()
+                for  block in list_of_rows:
+                    wr_date = block['Срок поставки'].split('.')
                     good_date = [wr_date[2], wr_date[1], wr_date[0]]
                     date = '-'.join(good_date)
                     d = Data.objects.create(
-                        id=int(block[0]), 
-                        order_number=int(block[1]),
-                        price_usd=int(block[2]),
+                        id=int(block['№']), 
+                        order_number=int(block['Заказ №']),
+                        price_usd=int(block['Цена, USD']),
                         date_ship=date,
-                        price_rub=float(block[4])
+                        price_rub=float(block['Цена, RUB'])
                         )
                     d.save()
-                
+                        
+            except IntegrityError:
+                Data.objects.all().order_by("id")
+
         return Data.objects.all().order_by("id")
     
     def perform_create(self, serializer):

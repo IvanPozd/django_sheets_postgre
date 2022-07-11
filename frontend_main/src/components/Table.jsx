@@ -25,11 +25,11 @@ const MyTable = props => {
       <Table>
         <thead>
           <tr>
-            <th>id</th>
-            <th>order number</th>
-            <th>price usd</th>
-            <th>date ship</th>
-            <th>price rub</th>
+            <th>№</th>
+            <th>Заказ №</th>
+            <th>Цена USD</th>
+            <th>Срок поставки</th>
+            <th>Цена RUB</th>
           </tr>
         </thead>
         {someData.map((oneData) => {

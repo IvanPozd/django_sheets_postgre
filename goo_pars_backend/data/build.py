@@ -25,11 +25,7 @@ def current_usd_rub():
         
 
 def get_service_sacc():
-    # spread_sheet_id = "1jcdmb5ytzUvG5-UBy-YcHtHuHGSIsS7s0Gw5_K5AUe0"
-    sheet_id = "0"
-    creds_json = (
-        os.path.dirname(__file__) + "/creds/golden-object-354110-d76b343f1653.json"
-    )
+    creds_json = (os.path.dirname(__file__) + "/creds/НАЗВАНИЕ-ВАШЕГО-ФАЙЛА")
     scopes = ["https://www.googleapis.com/auth/spreadsheets"]
 
     creds_service = ServiceAccountCredentials.from_json_keyfile_name(
@@ -61,7 +57,7 @@ def master():
     sheet = service.spreadsheets()
 
     # https://docs.google.com/spreadsheets/d/xxx/edit#gid=0
-    sheet_id = "1jcdmb5ytzUvG5-UBy-YcHtHuHGSIsS7s0Gw5_K5AUe0"
+    sheet_id = "ID-ВАШЕЙ-ТАБЛИЦЫ"
 
     # https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get
     # respA = sheet.values().get(spreadsheetId=sheet_id, range="Лист1!A1:A50").execute()
@@ -72,21 +68,28 @@ def master():
 
     data = resp["valueRanges"][0]["values"]
 
-    rub = current_usd_rub() 
-    count = 0
-    for i in data:
-        if count == 0:
-            i.append("стоимостьв руб.")
-        elif count > 0:
+    rub = current_usd_rub()
+    
+    for index, i in enumerate(data):
+        if index == 0:
+            i.append("Цена, RUB")
+        else:
             dollar_cost = float(i[2])
             rub_cost = dollar_cost * rub
             rub_format = f"{rub_cost:.2f}"
             i.append(rub_format) 
-        all_data.append(i)
-        count += 1
+            all_data.append({
+                data[0][0] : i[0],
+                data[0][1] : i[1],
+                data[0][2] : i[2],
+                data[0][3] : i[3],
+                data[0][4] : i[4]
+            })
+        
 
     return all_data
 
 
 if __name__ == "__main__":
-    master()
+    for item in master():
+        print(item)
